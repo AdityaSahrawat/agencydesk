@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Mypy / Ruff
+.mypy_cache/
+.ruff_cache/
+
+# Local Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Database / Local SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploaded Files & Attachments
+uploads/*
+!uploads/.gitkeep
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Generated Files
+.DS_Store
+Thumbs.db
