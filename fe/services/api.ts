@@ -56,7 +56,7 @@ export async function getClients(agencyId: string, params: { search?: string; pa
     if (params.search) {
         res = await instance.get("/clients/search", { params: { q: params.search } });
     } else {
-        res = await instance.get("/clients", { params: { skip, limit: pageSize } });
+        res = await instance.get("/clients/", { params: { skip, limit: pageSize } });
     }
 
     const rawList = Array.isArray(res.data) ? res.data : (res.data.data || []);
@@ -85,7 +85,7 @@ export async function createClient(data: { name: string; email?: string; contact
         contact_email: data.contact_email || data.email || "",
         contact_phone: data.contact_phone || data.phone,
     };
-    const res = await instance.post("/clients", payload);
+    const res = await instance.post("/clients/", payload);
     const c = res.data;
     return {
         id: c.id,
@@ -150,7 +150,7 @@ export async function getProjects(agencyId: string, params: { clientId?: string;
     if (params.search) {
         res = await instance.get("/projects/search", { params: { q: params.search } });
     } else {
-        res = await instance.get("/projects", { params: { skip, limit: pageSize } });
+        res = await instance.get("/projects/", { params: { skip, limit: pageSize } });
     }
 
     let rawList: any[] = Array.isArray(res.data) ? res.data : (res.data.data || []);
@@ -176,7 +176,7 @@ export async function getProject(id: string): Promise<Project> {
 }
 
 export async function getProjectsForClient(clientId: string): Promise<Project[]> {
-    const res = await instance.get("/projects", { params: { limit: 100 } });
+    const res = await instance.get("/projects/", { params: { limit: 100 } });
     const rawList: any[] = Array.isArray(res.data) ? res.data : [];
     return rawList.filter((p: any) => p.client_id === clientId).map(mapProject);
 }
@@ -188,7 +188,7 @@ export async function createProject(data: { name: string; description?: string; 
         client_id: data.clientId,
         status: data.status || "planning",
     };
-    const res = await instance.post("/projects", payload);
+    const res = await instance.post("/projects/", payload);
     return mapProject(res.data);
 }
 
@@ -233,7 +233,7 @@ export async function getTasks(params: { projectId?: string; assigneeId?: string
     if (params.assigneeId) queryParams.assigned_to = params.assigneeId;
     if (params.status && params.status !== "all") queryParams.task_status = params.status;
 
-    const res = await instance.get("/tasks", { params: queryParams });
+    const res = await instance.get("/tasks/", { params: queryParams });
     let rawList: any[] = Array.isArray(res.data) ? res.data : [];
 
     if (params.priority && params.priority !== "all") {
@@ -268,7 +268,7 @@ export async function createTask(data: { projectId: string; title: string; descr
         assigned_to: data.assigneeId,
         is_internal: data.internal ?? false,
     };
-    const res = await instance.post("/tasks", payload);
+    const res = await instance.post("/tasks/", payload);
     return mapTask(res.data);
 }
 
@@ -311,7 +311,7 @@ export async function createComment(data: { taskId: string; content: string; is_
         content: data.content,
         is_internal: data.is_internal ?? data.internal ?? false,
     };
-    const res = await instance.post("/comments", payload);
+    const res = await instance.post("/comments/", payload);
     const c = res.data;
     return {
         id: c.id,
@@ -401,7 +401,7 @@ export async function deleteFile(id: string): Promise<void> {
 
 // ── TIME ENTRIES ──────────────────────────────────────────
 export async function getTimeEntries(taskId: string): Promise<TimeEntry[]> {
-    const res = await instance.get("/time-entries", { params: { task_id: taskId } });
+    const res = await instance.get("/time-entries/", { params: { task_id: taskId } });
     const rawList: any[] = Array.isArray(res.data) ? res.data : [];
     return rawList.map((t: any) => ({
         id: t.id,
@@ -423,7 +423,7 @@ export async function createTimeEntry(data: { projectId?: string; taskId?: strin
         entry_date: data.date,
         description: data.note,
     };
-    const res = await instance.post("/time-entries", payload);
+    const res = await instance.post("/time-entries/", payload);
     const t = res.data;
     return {
         id: t.id,
@@ -485,13 +485,13 @@ export async function getDashboardStats(agencyId: string): Promise<DashboardStat
     const data = res.data;
     const totalProjects = data.active_projects || 0;
     const completedTasks = data.tasks_by_status?.done || 0;
-    const totalTasks = (data.tasks_by_status?.todo || 0) + (data.tasks_by_status?.in_progress || 0) + completedTasks;
+    const totalTasks = (data.tasks_by_status?.todo || 0) + (data.tasks_by_status?.in_progress || 0) + (data.tasks_by_status?.review || 0) + completedTasks;
     const totalHours = data.total_hours_logged || 0;
     return {
         totalClients: data.total_clients || 0,
         activeProjects: totalProjects,
         totalProjects,
-        pendingTasks: (data.tasks_by_status?.todo || 0) + (data.tasks_by_status?.in_progress || 0),
+        pendingTasks: (data.tasks_by_status?.todo || 0) + (data.tasks_by_status?.in_progress || 0) + (data.tasks_by_status?.review || 0),
         totalTasks,
         completedTasks,
         totalHours,
@@ -504,7 +504,7 @@ export async function getClientDashboardStats(clientId: string): Promise<{ total
     const data = res.data;
     return {
         totalProjects: data.active_projects || 0,
-        totalTasks: (data.tasks_by_status?.todo || 0) + (data.tasks_by_status?.in_progress || 0) + (data.tasks_by_status?.done || 0),
+        totalTasks: (data.tasks_by_status?.todo || 0) + (data.tasks_by_status?.in_progress || 0) + (data.tasks_by_status?.review || 0) + (data.tasks_by_status?.done || 0),
         completedTasks: data.tasks_by_status?.done || 0,
         totalHours: data.total_hours_logged || 0,
     };

@@ -38,7 +38,7 @@ async def upload_file(
 async def list_task_files(
     task_id: uuid.UUID,
     skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=500),
+    limit: int = Query(100, ge=1, le=2000),
     membership: AgencyMembership = Depends(get_tenant_membership),
     db: AsyncSession = Depends(get_db)
 ):

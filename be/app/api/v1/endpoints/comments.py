@@ -13,6 +13,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=CommentResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=CommentResponse, status_code=status.HTTP_201_CREATED)
 async def create_comment(
     data: CommentCreate,
     current_user: User = Depends(get_current_user),
@@ -27,7 +28,7 @@ async def create_comment(
 async def list_task_comments(
     task_id: uuid.UUID,
     skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=500),
+    limit: int = Query(100, ge=1, le=2000),
     membership: AgencyMembership = Depends(get_tenant_membership),
     db: AsyncSession = Depends(get_db)
 ):

@@ -107,7 +107,7 @@ export default function ProjectsPage() {
                         {(data?.data ?? []).map((p: Project) => {
                             const stats = taskStats(p.id);
                             return (
-                                <Card key={p.id} className="cursor-pointer hover:border-primary/40" onClick={() => router.push(`/projects/${p.id}`)}>
+                                <Card key={p.id} className="cursor-pointer hover:border-primary/40" onClick={() => router.push(`/agency/projects/${p.id}`)}>
                                     <CardContent className="p-5">
                                         <div className="flex items-start justify-between">
                                             <div className="flex-1">

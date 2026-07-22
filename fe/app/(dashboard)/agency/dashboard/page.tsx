@@ -51,7 +51,7 @@ export default function DashboardPage() {
                     <Card className="lg:col-span-2">
                         <CardHeader className="flex flex-row items-center justify-between">
                             <CardTitle className="text-base">Recent Projects</CardTitle>
-                            <Link href="/projects" className="text-sm text-primary hover:underline">View all</Link>
+                            <Link href="/agency/projects" className="text-sm text-primary hover:underline">View all</Link>
                         </CardHeader>
                         <CardContent className="space-y-3">
                             {recentProjects.length === 0 ? (
@@ -60,7 +60,7 @@ export default function DashboardPage() {
                                 recentProjects.map((p: Project) => (
                                     <Link
                                         key={p.id}
-                                        href={`/projects/${p.id}`}
+                                        href={`/agency/projects/${p.id}`}
                                         className="flex items-center justify-between rounded-lg border border-border p-3 hover:bg-accent"
                                     >
                                         <div>
@@ -110,7 +110,7 @@ export default function DashboardPage() {
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle className="text-base">Recent Tasks</CardTitle>
-                        <Link href="/projects" className="text-sm text-primary hover:underline">View all</Link>
+                        <Link href="/agency/projects" className="text-sm text-primary hover:underline">View all</Link>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-2">
@@ -120,7 +120,7 @@ export default function DashboardPage() {
                                 recentTasks.map((t: Task) => (
                                     <Link
                                         key={t.id}
-                                        href={`/tasks/${t.id}`}
+                                        href={`/agency/tasks/${t.id}`}
                                         className="flex items-center justify-between rounded-lg border border-border p-3 hover:bg-accent"
                                     >
                                         <div className="flex items-center gap-3">

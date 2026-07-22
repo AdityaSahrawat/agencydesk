@@ -41,7 +41,7 @@ export function useClients(agencyId: string, params: ClientParams = {}) {
 export function useAllClients(agencyId: string) {
     return useQuery<PaginatedResponse<Client>>({
         queryKey: ["clients", agencyId, "all"],
-        queryFn: () => api.getClients(agencyId, { pageSize: 1000 }),
+        queryFn: () => api.getClients(agencyId, { pageSize: 500 }),
         enabled: !!agencyId,
     });
 }
@@ -83,7 +83,7 @@ export function useProjects(agencyId: string, params: ProjectParams = {}) {
 export function useAllProjects(agencyId: string) {
     return useQuery<PaginatedResponse<Project>>({
         queryKey: ["projects", agencyId, "all"],
-        queryFn: () => api.getProjects(agencyId, { pageSize: 1000 }),
+        queryFn: () => api.getProjects(agencyId, { pageSize: 500 }),
         enabled: !!agencyId,
     });
 }
@@ -140,7 +140,7 @@ export function useTasks(params: TaskParams = {}) {
 export function useAllTasks(params: TaskParams = {}) {
     return useQuery<PaginatedResponse<Task>>({
         queryKey: ["tasks", "all", params],
-        queryFn: () => api.getTasks({ pageSize: 1000, ...params }),
+        queryFn: () => api.getTasks({ pageSize: 500, ...params }),
     });
 }
 

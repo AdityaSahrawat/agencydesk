@@ -130,7 +130,7 @@ export default function ProjectDetailPage() {
         <div>
             <Navbar title={project.name} subtitle={client?.name} />
             <div className="space-y-6 p-6">
-                <Button variant="ghost" size="sm" onClick={() => router.push("/projects")} className="mb-2">
+                <Button variant="ghost" size="sm" onClick={() => router.push("/agency/projects")} className="mb-2">
                     <ArrowLeft className="mr-1 h-4 w-4" />
                     Back to Projects
                 </Button>
@@ -226,7 +226,7 @@ export default function ProjectDetailPage() {
                                     <div
                                         key={t.id}
                                         className="flex items-center justify-between rounded-lg border border-border p-4 hover:bg-accent cursor-pointer"
-                                        onClick={() => router.push(`/tasks/${t.id}`)}
+                                        onClick={() => router.push(`/agency/tasks/${t.id}`)}
                                     >
                                         <div className="flex items-center gap-3">
                                             <Badge className={TASK_STATUS_COLORS[t.status as TaskStatus]} variant="secondary">

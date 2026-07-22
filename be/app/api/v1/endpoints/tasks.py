@@ -20,6 +20,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=TaskResponse, status_code=status.HTTP_201_CREATED)
 async def create_task(
     data: TaskCreate,
     current_user: User = Depends(get_current_user),
@@ -31,13 +32,14 @@ async def create_task(
 
 
 @router.get("/", response_model=List[TaskResponse])
+@router.get("", response_model=List[TaskResponse])
 async def list_tasks(
     project_id: Optional[uuid.UUID] = Query(None),
     assigned_to: Optional[uuid.UUID] = Query(None),
     task_status: Optional[TaskStatus] = Query(None),
     search: Optional[str] = Query(None),
     skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=500),
+    limit: int = Query(100, ge=1, le=2000),
     membership: AgencyMembership = Depends(get_tenant_membership),
     db: AsyncSession = Depends(get_db)
 ):

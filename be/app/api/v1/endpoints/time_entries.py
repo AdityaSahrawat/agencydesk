@@ -18,6 +18,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=TimeEntryResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=TimeEntryResponse, status_code=status.HTTP_201_CREATED)
 async def log_time_entry(
     data: TimeEntryCreate,
     current_user: User = Depends(get_current_user),
@@ -29,11 +30,13 @@ async def log_time_entry(
 
 
 @router.get("/", response_model=List[TimeEntryResponse])
+@router.get("", response_model=List[TimeEntryResponse])
 async def list_time_entries(
     project_id: Optional[uuid.UUID] = Query(None),
     user_id: Optional[uuid.UUID] = Query(None),
+    task_id: Optional[str] = Query(None),
     skip: int = Query(0, ge=0),
-    limit: int = Query(100, ge=1, le=500),
+    limit: int = Query(100, ge=1, le=2000),
     membership: AgencyMembership = Depends(get_tenant_membership),
     db: AsyncSession = Depends(get_db)
 ):
