@@ -7,12 +7,12 @@ import { useAuth } from "@/providers/auth-provider";
 import { LayoutDashboard, Users, FolderKanban, Building2, BarChart3, Settings, LogOut, ChevronsLeftRight } from "lucide-react";
 
 const navItems = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/clients", label: "Clients", icon: Building2 },
-    { href: "/projects", label: "Projects", icon: FolderKanban },
-    { href: "/users", label: "Users", icon: Users },
-    { href: "/reports", label: "Reports", icon: BarChart3 },
-    { href: "/settings", label: "Settings", icon: Settings },
+    { href: "/agency/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/agency/clients", label: "Clients", icon: Building2 },
+    { href: "/agency/projects", label: "Projects", icon: FolderKanban },
+    { href: "/agency/users", label: "Users", icon: Users },
+    { href: "/agency/reports", label: "Reports", icon: BarChart3 },
+    { href: "/agency/settings", label: "Settings", icon: Settings },
 ];
 
 export function AgencySidebar() {

@@ -16,7 +16,7 @@ export default function Home() {
     } else if (user.role === "client_user") {
       router.replace("/portal");
     } else {
-      router.replace("/dashboard");
+      router.replace("/agency/dashboard");
     }
   }, [user, isLoading, router]);
 

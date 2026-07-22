@@ -21,7 +21,7 @@ export function RouteGuard({ children, roles }: GuardProps) {
             return;
         }
         if (roles && user && !roles.includes(user.role)) {
-            router.replace(user.role === "client_user" ? "/portal" : "/dashboard");
+            router.replace(user.role === "client_user" ? "/portal" : "/agency/dashboard");
         }
     }, [user, isLoading, roles, router]);
 

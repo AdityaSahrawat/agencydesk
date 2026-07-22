@@ -10,7 +10,7 @@ interface AuthContextType {
     agencyId: string | null;
     role: Role | null;
     isLoading: boolean;
-    login: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<User>;
     logout: () => void;
     setAgency: (agencyId: string) => void;
 }
@@ -100,7 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 api.setAgencyIdHeader(activeAgencyId);
             }
 
-            setUser({
+            const newUser: User = {
                 id: profile.id,
                 email: profile.email,
                 name: profile.full_name || profile.email.split("@")[0],
@@ -108,7 +108,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 agencyId: activeAgencyId,
                 clientId: activeMembership?.client_id || undefined,
                 createdAt: profile.created_at || new Date().toISOString(),
-            });
+            };
+            setUser(newUser);
+            return newUser;
         } finally {
             setIsLoading(false);
         }
